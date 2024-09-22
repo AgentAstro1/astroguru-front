@@ -13,9 +13,10 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
 
 interface PDFcompProps {
   link: string;
+  task: string;
 }
 
-const PDFcomp: React.FC<PDFcompProps> = ({ link }) => {
+const PDFcomp: React.FC<PDFcompProps> = ({ link, task }) => {
   const [numPages, setNumPages] = useState<number>(0);
   const [pageNumber, setPageNumber] = useState<number>(1);
 
@@ -24,19 +25,7 @@ const PDFcomp: React.FC<PDFcompProps> = ({ link }) => {
   }
 
   const download = () => {
-    fetch(link)
-      .then((response) => response.blob())
-      .then((blob) => {
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = "ЭКСПРЕСС ПРОГНОЗ НА 2025 ГОД.pdf";
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-        window.URL.revokeObjectURL(url);
-      })
-      .catch((err) => console.error(err));
+    window.open(`https://astroacademy1.com/api/v1/download/${task}`);
   };
 
   return (
@@ -57,14 +46,16 @@ const PDFcomp: React.FC<PDFcompProps> = ({ link }) => {
               disabled={pageNumber <= 1}
               onClick={() => setPageNumber(pageNumber - 1)}
             >
-              <ArrowBackIosIcon style={{ fontSize: "1em" }} />
+              {/* <ArrowBackIosIcon style={{ fontSize: "1em" }} /> */}
+              &lt;
             </button>
             <button
               className="pdf-change-page"
               disabled={pageNumber >= numPages}
               onClick={() => setPageNumber(pageNumber + 1)}
             >
-              <ArrowForwardIosIcon style={{ fontSize: "1em" }} />
+              {/* <ArrowForwardIosIcon style={{ fontSize: "1em" }} /> */}
+              &gt;
             </button>
           </div>
         )}

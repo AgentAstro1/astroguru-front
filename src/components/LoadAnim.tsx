@@ -1,5 +1,5 @@
 import React from "react";
-import "../static/styles/anim.scss"
+import "../static/styles/anim.scss";
 
 export const LoadAnimation: React.FC<{}> = () => {
   return (
@@ -21,9 +21,9 @@ export const LoadAnimation: React.FC<{}> = () => {
           <div className="wInnerBall"></div>
         </div>
       </div>
-      {/* <div className="animation-loading-text">
-        Загрузка файла, пожалуйста ожидайте
-      </div> */}
+      <div className="animation-loading-text">
+        Нейроастролог создаёт вашу консультацию, подождите 1 минуту
+      </div>
     </div>
   );
 };

@@ -35,7 +35,7 @@ const showToastError = (message: string) => {
   });
 };
 
-const pollForResult = (statusUrl: string): Promise<string> => {
+const pollForResult = (statusUrl: string): Promise<{ result_url: string; task_id: string }> => {
   return new Promise((resolve, reject) => {
     let isPolling = true;
 
@@ -47,7 +47,7 @@ const pollForResult = (statusUrl: string): Promise<string> => {
         if (data.result_url) {
           clearInterval(interval);
           isPolling = false;
-          resolve(data.result_url);
+          resolve({ result_url: data.result_url, task_id: data.task_id });
         } else {
           console.log(
             `Генерация продолжается. Статус: ${data.status}, Прогресс: ${
@@ -119,12 +119,12 @@ const MainForm: React.FC = () => {
       );
 
       const data: PDFResponse = await response.json();
-      const resultUrl = await pollForResult(data.status_url);
+      const { result_url, task_id } = await pollForResult(data.status_url);
 
-      const fileResponse = await fetch(`https://astroacademy1.com${resultUrl}`);
+      const fileResponse = await fetch(`https://astroacademy1.com${result_url}`);
       const file: PDFFileReponse = await fileResponse.json();
 
-      navigate(`/pdf?pdfLink=${encodeURIComponent(file.file_url)}`);
+      navigate(`/pdf?pdfLink=${encodeURIComponent(file.file_url)}&taskId=${task_id}`);
     } catch (error) {
       showToastError(
         typeof error === "string"
