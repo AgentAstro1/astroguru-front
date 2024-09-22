@@ -1,0 +1,103 @@
+.pdf-actions {
+  position: relative;
+  z-index: 100;
+  margin-top: 1em;
+  display: flex;
+  flex-direction: column;
+  font-family: "Gill Sans", sans-serif;
+  text-align: center;
+  font-size: 1.1em;
+
+  div {
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+  }
+}
+
+.pdf-container {
+  display: flex;
+  //   margin-top: 2em;
+}
+
+.react-pdf__Document,
+.react-pdf__Page {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+}
+
+.react-pdf__Page__canvas {
+  width: 35em !important;
+  height: 47em !important;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, 0%);
+  z-index: 1;
+}
+
+.react-pdf__Document:hover .react-pdf__Page__canvas {
+  transform: translate(-50%, 0%) scale(1);
+  z-index: 2;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+.react-pdf__Page__textContent.textLayer {
+  height: 0 !important;
+  span {
+    display: none;
+  }
+}
+.pdf-page-buttons {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 1.5em;
+}
+.pdf-change-page {
+  background: #6566b5;
+  border: none;
+  color: #fff;
+  font-size: 1.1em;
+  border-radius: 0.4em;
+  margin: 0;
+  padding: 0.5em;
+  padding-left: 1em;
+  padding-right: 1em;
+}
+
+.pdf-download {
+  margin: 0 !important;
+  margin-bottom: 0.3em !important;
+  text-align: center;
+  cursor: pointer;
+  background: #6566b5;
+  padding: 0.9em !important;
+  padding-left: 2em !important;
+  padding-right: 2em !important;
+  color: #fff !important;
+  width: auto;
+  align-self: center;
+  border-radius: 0.4em;
+}
+
+@media (max-width: 768px) {
+  .pdf-container {
+    display: flex;
+  }
+
+  .react-pdf__Page__canvas {
+    width: 22em !important;
+    height: 32em !important;
+  }
+
+  .react-pdf__Document:hover .react-pdf__Page__canvas {
+    transform: translate(-50%, 0%) scale(1);
+    z-index: 2;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  }
+}

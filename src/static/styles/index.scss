@@ -1,0 +1,158 @@
+@import "./colors.scss";
+
+:root {
+  width: 100%;
+  height: 100%;
+}
+
+body,
+html,
+.root {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  overflow-y: hidden;
+}
+
+.root {
+  justify-content: center;
+  align-items: start;
+}
+
+.app {
+  max-width: 75em;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  margin-top: 1.25em;
+  flex-direction: column;
+}
+
+.header {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: 1em;
+  justify-content: center;
+  margin-bottom: 3em;
+}
+
+.header-logo {
+  width: 24em;
+  cursor: pointer;
+}
+
+.header-content {
+  width: 100%;
+}
+
+.header-content-items {
+  border-radius: 0.5em;
+  display: flex;
+  justify-content: end;
+  background: $componentbg;
+  width: 100%;
+  height: 4em;
+  gap: 1.2em;
+  color: #ffff;
+}
+
+.header-content-profile {
+  font-size: 1.8em !important;
+  padding: 0.5em;
+  cursor: pointer;
+}
+
+.content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.content-send {
+  border-radius: 0.4em;
+  margin-top: 3.125em;
+  background: #6566b5;
+  padding: 1.2em;
+  border-radius: 0.5em;
+  color: #ffff;
+  font-size: 1.1em;
+  font-family: "Gill Sans", sans-serif;
+  cursor: pointer;
+}
+
+.content-send.disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.error-message {
+  display: flex;
+  justify-content: center;
+  font-size: 1em;
+  font-family: "Gill Sans", sans-serif;
+  padding: 0.625em 0.625em 0.625em 0.625em;
+  text-align: center;
+}
+
+.content-agreement {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.3em;
+
+  a {
+    outline: none;
+    text-decoration: none;
+    color: #6566b5;
+    font-size: 0.8em;
+    font-family: "Gill Sans", sans-serif;
+  }
+}
+
+@media (max-width: 768px) {
+  .app {
+    margin-top: 10px;
+    height: auto;
+    overflow-y: scroll;
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 3em;
+  }
+
+  .header-content {
+    width: 90%;
+  }
+
+  .header-logo {
+    width: 18em;
+  }
+
+  .content {
+    height: 100%;
+    justify-content: start;
+  }
+
+  .header-content-items {
+    justify-content: center;
+    gap: 0.5em;
+  }
+
+  .error-message {
+    font-size: 1.1em;
+  }
+
+  .content-send {
+    margin-top: 20px;
+    font-size: 1em;
+  }
+}

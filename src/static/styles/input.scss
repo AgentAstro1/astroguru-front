@@ -1,0 +1,71 @@
+@import "./colors.scss";
+
+.input-container {
+  position: relative;
+  max-width: 25em;
+  margin: 0 auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 0.3125em;
+
+  input {
+    box-sizing: border-box;
+    display: flex;
+    width: 100%;
+    padding: 0.625em 0.3125em 0.625em 0.3125em;
+    font-size: 1em;
+    border: 1px solid #ccc;
+    border-radius: 0.3125em;
+    transition: border-color 0.3s ease;
+    font-family: "Gill Sans", sans-serif;
+
+    &:focus {
+      outline: none;
+      border-color: #6566b5;
+      box-shadow: 0 0 0.3125em #6566b5;
+    }
+  }
+
+  .suggestions {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    max-height: 12.5em;
+    overflow-y: auto;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-top: none;
+    border-radius: 0 0 0.3125em 0.3125em;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+
+    .suggestion-item {
+      padding: 0.625em 0.9375em;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+
+      &:hover {
+        background-color: #f1f1f1;
+      }
+
+      &:not(:last-child) {
+        border-bottom: 1px solid #eee;
+      }
+    }
+  }
+}
+
+
+@media (max-width: 768px) {
+  .input-container {
+    max-width: 20em;
+    width: 100%;
+    margin: 0;
+
+    input {
+      width: 100%;
+    }
+  }
+}
