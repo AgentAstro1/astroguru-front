@@ -1,15 +1,5 @@
-// src/components/PDFcomp.tsx
-import React, { useEffect, useState } from "react";
-import { Document, Page, pdfjs } from "react-pdf";
-import "react-pdf/dist/esm/Page/AnnotationLayer.css";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-
-// Устанавливаем путь к pdf.worker.js
-pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-  "pdfjs-dist/build/pdf.worker.min.mjs",
-  import.meta.url
-).toString();
+// PDFcomp.tsx
+import React, { useEffect, useState, Suspense } from "react";
 
 interface PDFcompProps {
   link: string;
@@ -17,49 +7,26 @@ interface PDFcompProps {
 }
 
 const PDFcomp: React.FC<PDFcompProps> = ({ link, task }) => {
-  const [numPages, setNumPages] = useState<number>(0);
-  const [pageNumber, setPageNumber] = useState<number>(1);
+  const [isSafariBrowser, setIsSafariBrowser] = useState<boolean | "">(false);
 
-  function onDocumentLoadSuccess({ numPages }: { numPages: number }) {
-    setNumPages(numPages);
-  }
+  useEffect(() => {
+    const isSafari =
+      navigator.vendor &&
+      navigator.vendor.indexOf("Apple") > -1 &&
+      navigator.userAgent &&
+      navigator.userAgent.indexOf("CriOS") === -1 &&
+      navigator.userAgent.indexOf("FxiOS") === -1;
+    console.log("safari " + isSafari);
+    setIsSafariBrowser(isSafari);
+  }, []);
 
   const download = () => {
     window.open(`https://astroacademy1.com/api/v1/download/${task}`);
   };
 
-  return (
-    <div>
+  if (isSafariBrowser) {
+    return (
       <div>
-        <Document file={link} onLoadSuccess={onDocumentLoadSuccess}>
-          <Page pageNumber={pageNumber} />
-        </Document>
-      </div>
-      <div className="pdf-actions">
-        <div>
-          Страница {pageNumber} из {numPages}
-        </div>
-        {numPages > 1 && (
-          <div className="pdf-page-buttons">
-            <button
-              className="pdf-change-page"
-              disabled={pageNumber <= 1}
-              onClick={() => setPageNumber(pageNumber - 1)}
-            >
-              {/* <ArrowBackIosIcon style={{ fontSize: "1em" }} /> */}
-              &lt;
-            </button>
-            <button
-              className="pdf-change-page"
-              disabled={pageNumber >= numPages}
-              onClick={() => setPageNumber(pageNumber + 1)}
-            >
-              {/* <ArrowForwardIosIcon style={{ fontSize: "1em" }} /> */}
-              &gt;
-            </button>
-          </div>
-        )}
-
         <div
           className="pdf-download"
           style={{ marginTop: "50px", color: "black" }}
@@ -68,8 +35,16 @@ const PDFcomp: React.FC<PDFcompProps> = ({ link, task }) => {
           Скачать
         </div>
       </div>
-    </div>
-  );
+    );
+  } else {
+    const PDFViewer = React.lazy(() => import("./PDFViewer"));
+
+    return (
+      <Suspense fallback={<div>Загрузка...</div>}>
+        <PDFViewer link={link} task={task} />
+      </Suspense>
+    );
+  }
 };
 
 export default PDFcomp;
