@@ -24,7 +24,19 @@ const PDFcomp: React.FC<PDFcompProps> = ({ link }) => {
   }
 
   const download = () => {
-    window.open(link);
+    fetch(link)
+      .then((response) => response.blob())
+      .then((blob) => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "ЭКСПРЕСС ПРОГНОЗ НА 2025 ГОД.pdf";
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        window.URL.revokeObjectURL(url);
+      })
+      .catch((err) => console.error(err));
   };
 
   return (
