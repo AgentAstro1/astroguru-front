@@ -16,8 +16,17 @@ const PDFcomp: React.FC<PDFcompProps> = ({ link, task }) => {
       navigator.userAgent &&
       navigator.userAgent.indexOf("CriOS") === -1 &&
       navigator.userAgent.indexOf("FxiOS") === -1;
-    console.log("safari " + isSafari);
-    setIsSafariBrowser(isSafari);
+
+    const isIphone = /iPhone/.test(navigator.userAgent);
+
+    console.log("Safari: " + isSafari);
+    console.log("iPhone: " + isIphone);
+
+    if (isIphone) {
+      setIsSafariBrowser(false);
+    } else {
+      setIsSafariBrowser(isSafari);
+    }
   }, []);
 
   const download = () => {
