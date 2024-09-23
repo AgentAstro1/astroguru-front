@@ -7,6 +7,8 @@ import { LoadAnimation } from "./LoadAnim";
 import { toast } from "react-toastify";
 import { CheckBox } from "@mui/icons-material";
 import { Checkbox } from "@mui/material";
+import { useDispatch } from "react-redux";
+import { updateInput } from "../store/inputSlice";
 
 interface PDFResponse {
   status_url: string;
@@ -73,9 +75,10 @@ const pollForResult = (
 };
 
 const MainForm: React.FC = () => {
+  const dispatch = useDispatch();
   const { values, errors } = useSelector((state: RootState) => state.inputs);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [knowTime, setKnowTime] = useState<boolean>(true);
+  const [knowTime, setKnowTime] = useState<boolean>(false);
   const navigate = useNavigate();
 
   const requiredFields = [
@@ -98,6 +101,9 @@ const MainForm: React.FC = () => {
   }, []);
 
   const handleBirthtime = (event: React.ChangeEvent<HTMLInputElement>) => {
+    knowTime
+      ? dispatch(updateInput({ key: "time", value: "" }))
+      : dispatch(updateInput({ key: "time", value: "12:00:00" }));
     setKnowTime(event.target.checked);
   };
 
