@@ -21,6 +21,13 @@ html,
   align-items: start;
 }
 
+.content-inputs {
+  max-width: 25em;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
 .app {
   max-width: 75em;
   width: 100%;
@@ -101,6 +108,11 @@ html,
   text-align: center;
 }
 
+.content-agreement.datetime {
+  align-self: self-start;
+  gap: 0;
+}
+
 .content-agreement {
   display: flex;
   justify-content: center;
@@ -148,11 +160,15 @@ html,
   }
 
   .error-message {
-    font-size: 1.1em;
+    font-size: 0.9em;
   }
 
   .content-send {
     margin-top: 20px;
     font-size: 1em;
+  }
+
+  .content-inputs {
+    max-width: 19em;
   }
 }

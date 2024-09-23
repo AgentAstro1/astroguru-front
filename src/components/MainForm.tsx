@@ -35,7 +35,9 @@ const showToastError = (message: string) => {
   });
 };
 
-const pollForResult = (statusUrl: string): Promise<{ result_url: string; task_id: string }> => {
+const pollForResult = (
+  statusUrl: string
+): Promise<{ result_url: string; task_id: string }> => {
   return new Promise((resolve, reject) => {
     let isPolling = true;
 
@@ -73,6 +75,7 @@ const pollForResult = (statusUrl: string): Promise<{ result_url: string; task_id
 const MainForm: React.FC = () => {
   const { values, errors } = useSelector((state: RootState) => state.inputs);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [knowTime, setKnowTime] = useState<boolean>(true);
   const navigate = useNavigate();
 
   const requiredFields = [
@@ -94,6 +97,10 @@ const MainForm: React.FC = () => {
     root.style.overflowY = "hidden";
   }, []);
 
+  const handleBirthtime = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setKnowTime(event.target.checked);
+  };
+
   const handleSubmit = async () => {
     setIsLoading(true);
     const payload = {
@@ -101,7 +108,7 @@ const MainForm: React.FC = () => {
       birth_time: values.time,
       birth_city: values.city,
       birth_city_coordinates: `${values.latitude},${values.longitude}`,
-      know_birth_time: true,
+      know_birth_time: knowTime,
       name: values.name,
       selected_option: "consultation",
     };
@@ -121,10 +128,14 @@ const MainForm: React.FC = () => {
       const data: PDFResponse = await response.json();
       const { result_url, task_id } = await pollForResult(data.status_url);
 
-      const fileResponse = await fetch(`https://astroacademy1.com${result_url}`);
+      const fileResponse = await fetch(
+        `https://astroacademy1.com${result_url}`
+      );
       const file: PDFFileReponse = await fileResponse.json();
 
-      navigate(`/pdf?pdfLink=${encodeURIComponent(file.file_url)}&taskId=${task_id}`);
+      navigate(
+        `/pdf?pdfLink=${encodeURIComponent(file.file_url)}&taskId=${task_id}`
+      );
     } catch (error) {
       showToastError(
         typeof error === "string"
@@ -147,20 +158,30 @@ const MainForm: React.FC = () => {
                 : "Пожалуйста, заполните все обязательные поля"}
             </div>
           )}
-          <Input
-            istime={true}
-            placeholder="Время рождения - 12:00:00"
-            inputKey="time"
-          />
-          <Input
-            isdate={true}
-            placeholder="Дата рождения - 05.05.1990"
-            inputKey="date"
-          />
-          <Input iscity={true} placeholder="Населенный пункт" inputKey="city" />
-          <Input placeholder="Имя человека или событие" inputKey="name" />
-          <Input placeholder="Широта" inputKey="latitude" />
-          <Input placeholder="Долгота" inputKey="longitude" />
+          <div className="content-inputs">
+            <Input
+              istime={true}
+              placeholder="Время рождения - 12:00:00"
+              inputKey="time"
+            />
+            <div className="content-agreement datetime">
+              <Checkbox checked={knowTime} onChange={handleBirthtime} />
+              <a href="/agreement">Я не помню время рождения</a>
+            </div>
+            <Input
+              isdate={true}
+              placeholder="Дата рождения - 05.05.1990"
+              inputKey="date"
+            />
+            <Input
+              iscity={true}
+              placeholder="Населенный пункт"
+              inputKey="city"
+            />
+            <Input placeholder="Имя человека или событие" inputKey="name" />
+            <Input placeholder="Широта" inputKey="latitude" />
+            <Input placeholder="Долгота" inputKey="longitude" />
+          </div>
           <div className="content-agreement">
             <Checkbox />
             <a href="/agreement">

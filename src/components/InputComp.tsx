@@ -53,7 +53,15 @@ export const Input: React.FC<InputProps> = ({
       fetch(
         `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(
           value
-        )}&countrycodes=ru&addressdetails=1&limit=10&format=json`
+        )}&addressdetails=1&limit=10&format=json`,
+        {
+          headers: {
+            accept: "*/*",
+            "accept-language": "ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7",
+          },
+          method: "GET",
+          mode: "cors",
+        }
       )
         .then((response) => response.json())
         .then((data: CitySuggestion[]) => {
