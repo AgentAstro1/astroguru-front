@@ -101,6 +101,7 @@ const MainForm: React.FC = () => {
   }, []);
 
   const handleBirthtime = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(event.target.checked);
     knowTime
       ? dispatch(updateInput({ key: "time", value: "" }))
       : dispatch(updateInput({ key: "time", value: "12:00:00" }));
@@ -114,11 +115,11 @@ const MainForm: React.FC = () => {
       birth_time: values.time,
       birth_city: values.city,
       birth_city_coordinates: `${values.latitude},${values.longitude}`,
-      know_birth_time: knowTime,
+      know_birth_time: !knowTime,
       name: values.name,
       selected_option: "consultation",
     };
-
+    console.log(payload);
     try {
       const response = await fetch(
         "https://astroacademy1.com/api/v1/generate_pdf",
@@ -172,7 +173,7 @@ const MainForm: React.FC = () => {
             />
             <div className="content-agreement datetime">
               <Checkbox checked={knowTime} onChange={handleBirthtime} />
-              <a href="/agreement">Я не помню время рождения</a>
+              <div>Я не помню время рождения</div>
             </div>
             <Input
               isdate={true}

@@ -111,6 +111,14 @@ html,
 .content-agreement.datetime {
   align-self: self-start;
   gap: 0;
+
+  div {
+    outline: none;
+    text-decoration: none;
+    color: #6566b5;
+    font-size: 0.8em;
+    font-family: "Gill Sans", sans-serif;
+  }
 }
 
 .content-agreement {
