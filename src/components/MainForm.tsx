@@ -5,7 +5,6 @@ import { RootState } from "../store/store";
 import { useNavigate } from "react-router-dom";
 import { LoadAnimation } from "./LoadAnim";
 import { toast } from "react-toastify";
-import { CheckBox } from "@mui/icons-material";
 import { Checkbox } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { updateInput } from "../store/inputSlice";
@@ -63,7 +62,7 @@ const pollForResult = (
         clearInterval(interval);
         reject("Произошла ошибка при генерации файла");
       }
-    }, 5000);
+    }, 10000);
 
     setTimeout(() => {
       if (isPolling) {
@@ -158,6 +157,7 @@ const MainForm: React.FC = () => {
     <div className="content">
       {!isLoading ? (
         <>
+          <div className="content-staticmsg">Введите данные своего рождения</div>
           {isSubmitDisabled && (
             <div className="error-message">
               {Object.keys(errors).length

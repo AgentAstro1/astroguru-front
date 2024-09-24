@@ -28,6 +28,16 @@ html,
   flex-direction: column;
 }
 
+.content-staticmsg {
+  max-width: 25em;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  font-family: "Gill Sans", sans-serif;
+  font-size: 1em;
+  margin-bottom: 1em;
+}
+
 .app {
   max-width: 75em;
   width: 100%;
@@ -76,7 +86,6 @@ html,
 
 .content {
   width: 100%;
-  height: 100%;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -100,6 +109,8 @@ html,
 }
 
 .error-message {
+  max-width: 25em;
+  width: 100%;
   display: flex;
   justify-content: center;
   font-size: 1em;
@@ -109,7 +120,7 @@ html,
 }
 
 .content-agreement.datetime {
-  align-self: self-start;
+  justify-content: start;
   gap: 0;
 
   div {
@@ -126,7 +137,8 @@ html,
   justify-content: center;
   align-items: center;
   gap: 0.3em;
-
+  max-width: 25em;
+  width: 100%;
   a {
     outline: none;
     text-decoration: none;
@@ -143,6 +155,12 @@ html,
     overflow-y: scroll;
   }
 
+  body,
+  html,
+  .root {
+    overflow-y: scroll !important;
+  }
+
   .header {
     flex-direction: column;
     align-items: center;
@@ -151,10 +169,6 @@ html,
 
   .header-content {
     width: 90%;
-  }
-
-  .header-logo {
-    width: 18em;
   }
 
   .content {
@@ -173,10 +187,15 @@ html,
 
   .content-send {
     margin-top: 20px;
+    margin-bottom: 20px;
     font-size: 1em;
   }
 
-  .content-inputs {
+  .content-inputs,
+  .error-message,
+  .content-agreement,
+  .content-staticmsg,
+  .header-logo {
     max-width: 19em;
   }
 }

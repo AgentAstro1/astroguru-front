@@ -356,3 +356,9 @@
     -moz-transform: rotate(900deg);
   }
 }
+
+@media (max-width: 768px) {
+  .animation {
+    height: 18em;
+  }
+}
