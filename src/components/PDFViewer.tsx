@@ -58,11 +58,7 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ link, task }) => {
             </button>
           </div>
         )}
-        <div
-          className="pdf-download"
-          style={{ marginTop: "50px", color: "black" }}
-          onClick={download}
-        >
+        <div className="pdf-download" onClick={download}>
           Скачать
         </div>
       </div>

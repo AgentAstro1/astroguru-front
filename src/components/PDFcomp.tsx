@@ -38,7 +38,6 @@ const PDFcomp: React.FC<PDFcompProps> = ({ link, task }) => {
       <div>
         <div
           className="pdf-download"
-          style={{ marginTop: "50px", color: "black" }}
           onClick={download}
         >
           Скачать

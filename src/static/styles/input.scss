@@ -23,8 +23,8 @@
 
     &:focus {
       outline: none;
-      border-color: #6566b5;
-      box-shadow: 0 0 0.3125em #6566b5;
+      border-color: $componentbgHover;
+      box-shadow: 0 0 0.3125em $componentbgHover;
     }
   }
 

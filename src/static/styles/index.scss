@@ -13,7 +13,7 @@ html,
   margin: 0;
   padding: 0;
   display: flex;
-  overflow-y: hidden;
+  overflow-y: scroll !important;
 }
 
 .root {
@@ -32,10 +32,9 @@ html,
   max-width: 25em;
   width: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: start;
   font-family: "Gill Sans", sans-serif;
   font-size: 1em;
-  margin-bottom: 1em;
 }
 
 .app {
@@ -89,19 +88,30 @@ html,
   display: flex;
   align-items: center;
   flex-direction: column;
+  margin-bottom: 5em;
 }
 
 .content-send {
+  position: absolute;
+  bottom: 0;
+  left: 50%; /* Center horizontally */
+  transform: translateX(-50%); /* Adjust position to the center */
+  text-align: center;
+  max-width: 25em;
+  width: 100%;
   border-radius: 0.4em;
   margin-top: 3.125em;
-  background: #6566b5;
-  padding: 1.2em;
+  background: $actionbtn;
+  padding-top: 0.9em;
+  padding-bottom: 0.9em;
   border-radius: 0.5em;
   color: #ffff;
   font-size: 1.1em;
   font-family: "Gill Sans", sans-serif;
   cursor: pointer;
+  margin-bottom: 20px;
 }
+
 
 .content-send.disabled {
   pointer-events: none;
@@ -112,11 +122,11 @@ html,
   max-width: 25em;
   width: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: start;
   font-size: 1em;
   font-family: "Gill Sans", sans-serif;
-  padding: 0.625em 0.625em 0.625em 0.625em;
-  text-align: center;
+  padding: 0.625em 0em 0.625em 0em;
+  text-align: start;
 }
 
 .content-agreement.datetime {
@@ -133,6 +143,8 @@ html,
 }
 
 .content-agreement {
+  max-width: 25em;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -187,7 +199,6 @@ html,
 
   .content-send {
     margin-top: 20px;
-    margin-bottom: 20px;
     font-size: 1em;
   }
 
@@ -195,7 +206,8 @@ html,
   .error-message,
   .content-agreement,
   .content-staticmsg,
-  .header-logo {
+  .header-logo,
+  .content-send {
     max-width: 19em;
   }
 }

@@ -157,14 +157,10 @@ const MainForm: React.FC = () => {
     <div className="content">
       {!isLoading ? (
         <>
-          <div className="content-staticmsg">Введите данные своего рождения</div>
-          {isSubmitDisabled && (
-            <div className="error-message">
-              {Object.keys(errors).length
-                ? "Исправьте ошибки в форме"
-                : "Пожалуйста, заполните все обязательные поля"}
-            </div>
-          )}
+          <div className="content-staticmsg">
+            Введите данные своего рождения
+          </div>
+
           <div className="content-inputs">
             <Input
               istime={true}
@@ -196,11 +192,18 @@ const MainForm: React.FC = () => {
               конфиденциальности
             </a>
           </div>
+          {isSubmitDisabled && (
+            <div className="error-message">
+              {Object.keys(errors).length
+                ? "Исправьте ошибки в форме"
+                : "Пожалуйста, заполните все поля"}
+            </div>
+          )}
           <div
             className={`content-send ${isSubmitDisabled ? "disabled" : ""}`}
             onClick={!isSubmitDisabled ? handleSubmit : undefined}
           >
-            Прогноз
+            Получить прогноз
           </div>
         </>
       ) : (
