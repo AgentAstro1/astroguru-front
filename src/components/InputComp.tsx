@@ -19,6 +19,7 @@ interface InputProps {
   istime?: boolean;
   isdate?: boolean;
   iscity?: boolean;
+  isEmail?: boolean;
   placeholder: string;
   inputKey: string;
 }
@@ -29,13 +30,11 @@ export const Input: React.FC<InputProps> = ({
   iscity,
   placeholder,
   inputKey,
+  isEmail,
 }) => {
   const dispatch = useDispatch();
   const valueFromStore = useSelector(
     (state: RootState) => state.inputs.values[inputKey] || ""
-  );
-  const errorMessage = useSelector(
-    (state: RootState) => state.inputs.errors[inputKey]
   );
   const [isFocused, setIsFocused] = useState<boolean>(false);
   const [citySuggestions, setCitySuggestions] = useState<CitySuggestion[]>([]);
@@ -186,6 +185,29 @@ export const Input: React.FC<InputProps> = ({
 
       if (!error && secondStr && (isNaN(second) || second < 0 || second > 59)) {
         error = "Секунды должны быть от 0 до 59";
+      }
+
+      setError(error);
+
+      if (error) {
+        dispatch(setInputError({ key: inputKey, error }));
+      } else {
+        dispatch(clearInputError({ key: inputKey }));
+      }
+    }
+    if (isEmail) {
+      value = value.replace(/\s+/g, "");
+      if (value.length > 254) {
+        value = value.slice(0, 254);
+      }
+
+      dispatch(updateInput({ key: inputKey, value }));
+
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      let error = "";
+
+      if (!emailRegex.test(value)) {
+        error = "Некорректный формат email";
       }
 
       setError(error);

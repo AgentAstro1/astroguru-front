@@ -1,4 +1,3 @@
-// PDFcomp.tsx
 import React, { useEffect, useState, Suspense } from "react";
 
 interface PDFcompProps {
@@ -10,22 +9,12 @@ const PDFcomp: React.FC<PDFcompProps> = ({ link, task }) => {
   const [isSafariBrowser, setIsSafariBrowser] = useState<boolean | "">(false);
 
   useEffect(() => {
-    const isSafari =
-      navigator.vendor &&
-      navigator.vendor.indexOf("Apple") > -1 &&
-      navigator.userAgent &&
-      navigator.userAgent.indexOf("CriOS") === -1 &&
-      navigator.userAgent.indexOf("FxiOS") === -1;
+    const isMac = /(Mac|iPhone|iPod|iPad)/i.test(navigator.userAgent)
 
-    const isIphone = /iPhone/.test(navigator.userAgent);
-
-    console.log("Safari: " + isSafari);
-    console.log("iPhone: " + isIphone);
-
-    if (isIphone) {
+    if (isMac) {
       setIsSafariBrowser(false);
     } else {
-      setIsSafariBrowser(isSafari);
+      setIsSafariBrowser(isMac);
     }
   }, []);
 
