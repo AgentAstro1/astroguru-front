@@ -83,6 +83,7 @@ const MainForm: React.FC = () => {
   const [knowTime, setKnowTime] = useState<boolean>(false);
   const [userDataSubmitted, setUserDataSubmitted] = useState<boolean>(false);
   const [emailSubmitted, setEmailSubmitted] = useState<boolean>(false);
+  const [agree, setAgree] = useState<boolean>(false);
   const navigate = useNavigate();
 
   const requiredFields = [
@@ -97,7 +98,8 @@ const MainForm: React.FC = () => {
     (key) => values[key] && values[key].trim() !== ""
   );
 
-  const isSubmitDisabled = !!Object.keys(errors).length || !areAllFieldsFilled;
+  const isSubmitDisabled =
+    !!Object.keys(errors).length || !areAllFieldsFilled || !agree;
 
   useEffect(() => {
     const root = document.getElementById("root") as HTMLElement;
@@ -121,6 +123,10 @@ const MainForm: React.FC = () => {
       return;
     }
     setUserDataSubmitted(true);
+  };
+
+  const handleAgreement = () => {
+    setAgree(!agree);
   };
 
   const handleEmailSubmit = async () => {
@@ -242,7 +248,7 @@ const MainForm: React.FC = () => {
               <Input placeholder="Долгота" inputKey="longitude" />
             </div>
             <div className="content-agreement">
-              <Checkbox />
+              <Checkbox checked={agree} onChange={handleAgreement} />
               <a href="/agreement">
                 подтверждаю обработку данных и согласен с политикой
                 конфиденциальности
