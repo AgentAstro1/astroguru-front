@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import { Checkbox } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { updateInput } from "../store/inputSlice";
+import { API_URL } from "../static/constants/cons";
 
 interface PDFResponse {
   status_url: string;
@@ -49,15 +50,13 @@ const pollForResult = (
 
     const interval = setInterval(async () => {
       try {
-        const response = await fetch(`https://astroacademy1.com${statusUrl}`);
+        const response = await fetch(`${API_URL}${statusUrl}`);
         const data: PDFCompleteResponse = await response.json();
 
         if (data.result_url) {
           clearInterval(interval);
           isPolling = false;
           resolve({ result_url: data.result_url, task_id: data.task_id });
-        } else {
-          // Генерация продолжается...
         }
       } catch (error) {
         clearInterval(interval);
@@ -140,7 +139,7 @@ const MainForm: React.FC = () => {
 
       try {
         const response = await fetch(
-          "https://api.astroguru.ru/api/v1/check-generation",
+          "/agreement",
           {
             method: "POST",
             headers: {
@@ -170,7 +169,7 @@ const MainForm: React.FC = () => {
           };
           try {
             const response = await fetch(
-              "https://astroacademy1.com/api/v1/generate_pdf",
+              `${API_URL}/api/v1/generate_pdf`,
               {
                 method: "POST",
                 headers: {
@@ -186,7 +185,7 @@ const MainForm: React.FC = () => {
             );
 
             const fileResponse = await fetch(
-              `https://astroacademy1.com${result_url}`
+              `${API_URL}${result_url}`
             );
             const file: PDFFileReponse = await fileResponse.json();
 

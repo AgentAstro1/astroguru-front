@@ -6,6 +6,7 @@ import ChatBubbleIcon from "@mui/icons-material/ChatBubble";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 
 import logo from "./static/img/logo.png";
+import { Agreement } from "./components/Agreement";
 const MainForm = React.lazy(() => import("./components/MainForm"));
 const PDFPage = React.lazy(() => import("./components/PDFPage"));
 
@@ -38,6 +39,7 @@ function App() {
         <Routes>
           <Route path="/" element={<MainForm />} />
           <Route path="/pdf" element={<PDFPage />} />
+          <Route path="/agreement" element={<Agreement />} />
         </Routes>
       </Suspense>
     </div>

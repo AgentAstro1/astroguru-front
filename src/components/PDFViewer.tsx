@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
+import { API_URL } from "../static/constants/cons";
 
 if (typeof import.meta !== "undefined" && import.meta.url) {
   pdfjs.GlobalWorkerOptions.workerSrc = new URL(
@@ -26,7 +27,7 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ link, task }) => {
   }
 
   const download = () => {
-    window.open(`https://astroacademy1.com/api/v1/download/${task}`);
+    window.open(`${API_URL}/api/v1/download/${task}`);
   };
 
   return (

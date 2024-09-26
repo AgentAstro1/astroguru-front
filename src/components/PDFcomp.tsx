@@ -1,4 +1,5 @@
 import React, { useEffect, useState, Suspense } from "react";
+import { API_URL } from "../static/constants/cons";
 
 interface PDFcompProps {
   link: string;
@@ -19,7 +20,7 @@ const PDFcomp: React.FC<PDFcompProps> = ({ link, task }) => {
   }, []);
 
   const download = () => {
-    window.open(`https://astroacademy1.com/api/v1/download/${task}`);
+    window.open(`${API_URL}/api/v1/download/${task}`);
   };
 
   if (isSafariBrowser) {
