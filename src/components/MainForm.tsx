@@ -9,6 +9,7 @@ import { Checkbox } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { updateInput } from "../store/inputSlice";
 import { API_URL } from "../static/constants/cons";
+import { AUTH_API_URL } from "../static/constants/cons";
 
 interface PDFResponse {
   status_url: string;
@@ -27,8 +28,9 @@ interface PDFFileReponse {
 }
 
 interface Access {
-  access: boolean;
-  status: boolean;
+  code: string;
+  message : string;
+  status : string;
 }
 
 const showToastError = (message: string) => {
@@ -41,6 +43,8 @@ const showToastError = (message: string) => {
     draggable: true,
   });
 };
+
+
 
 const pollForResult = (
   statusUrl: string
@@ -57,6 +61,7 @@ const pollForResult = (
           clearInterval(interval);
           isPolling = false;
           resolve({ result_url: data.result_url, task_id: data.task_id });
+
         }
       } catch (error) {
         clearInterval(interval);
@@ -139,7 +144,7 @@ const MainForm: React.FC = () => {
 
       try {
         const response = await fetch(
-          "/agreement",
+        `${AUTH_API_URL}/api/v2/check_access`,
           {
             method: "POST",
             headers: {
@@ -156,7 +161,7 @@ const MainForm: React.FC = () => {
           return;
         }
 
-        if (accessResponse.access) {
+        if (accessResponse.status === "success" && accessResponse.code === "access_granted") {
           setIsLoading(true);
           const payload = {
             birth_date: values.date,
@@ -189,6 +194,20 @@ const MainForm: React.FC = () => {
             );
             const file: PDFFileReponse = await fileResponse.json();
 
+            const confirmResponse = await fetch(
+              `https://api.astroguru.ru/api/v2/confirm_generation`,
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ email: values.email }),
+              }
+            );
+            if (!confirmResponse.ok) {
+              throw new Error("Ошибка при подтверждении генерации");
+            }
+
             navigate(
               `/pdf?pdfLink=${encodeURIComponent(
                 file.file_url
@@ -204,7 +223,7 @@ const MainForm: React.FC = () => {
             setIsLoading(false);
           }
         } else {
-          showToastError("Вы исчерпали лимит на свои прогнозы");
+          showToastError("Вам не доступка генерация");
         }
       } catch (error) {
         showToastError("Ошибка при проверке доступа");
